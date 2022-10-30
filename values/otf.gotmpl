@@ -23,11 +23,11 @@ ingress:
     kubernetes.io/ingress.class: nginx
     kubernetes.io/tls-acme: "true"
   hosts:
-    - otf.ninja
+    - {{ requiredEnv "OTF_HOSTNAME" }}
   tls:
-    - secretName: otf-ninja-tls
+    - secretName: {{ requiredEnv "OTF_HOSTNAME" }}
       hosts:
-      - otf.ninja
+        - {{ requiredEnv "OTF_HOSTNAME" }}
 
 serviceMonitor:
   enabled: true

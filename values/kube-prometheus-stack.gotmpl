@@ -5,11 +5,11 @@ grafana:
   ingress:
     enabled: true
     hosts:
-    - grafana.otf.ninja
+    - {{ requiredEnv "GRAFANA_HOSTNAME" }}
     tls:
-    - secretName: grafana.otf.ninja
+    - secretName: {{ requiredEnv "GRAFANA_HOSTNAME" }}
       hosts:
-      - grafana.otf.ninja
+      - {{ requiredEnv "GRAFANA_HOSTNAME" }}
     annotations:
       kubernetes.io/ingress.class: nginx
       kubernetes.io/tls-acme: "true"
@@ -24,11 +24,11 @@ prometheus:
   ingress:
     enabled: true
     hosts:
-    - prometheus.otf.ninja
+    - {{ requiredEnv "PROMETHEUS_HOSTNAME" }}
     tls:
-    - secretName: prometheus.otf.ninja
+    - secretName: {{ requiredEnv "PROMETHEUS_HOSTNAME" }}
       hosts:
-      - prometheus.otf.ninja
+      - {{ requiredEnv "PROMETHEUS_HOSTNAME" }}
     annotations:
       kubernetes.io/ingress.class: nginx
       kubernetes.io/tls-acme: "true"

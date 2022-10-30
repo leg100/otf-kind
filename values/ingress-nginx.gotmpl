@@ -1,4 +1,6 @@
 controller:
   config:
+    # overrides nginx default of 60s - this is the
+    # length of time before an agent needs to reconnect.
     upstream-keepalive-timeout: 600
     proxy-read-timeout: 600
