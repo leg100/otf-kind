@@ -1,4 +1,7 @@
 repositories:
+  - name: otf
+    url: https://leg100.github.io/otf-charts
+
   - name: cloudnative-pg
     url: https://cloudnative-pg.github.io/charts
 
@@ -11,7 +14,7 @@ repositories:
 releases:
   - name: otf
     namespace: default
-    chart: ../otf/chart
+    chart: otf/otf
     needs:
       - postgres
     values:
