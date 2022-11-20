@@ -4,3 +4,9 @@ controller:
     # length of time before an agent needs to reconnect.
     upstream-keepalive-timeout: 600
     proxy-read-timeout: 600
+    log-format-escape-json: "true"
+    log-format-upstream: '{{ readFile "nginx-log-format.json" | nospace }}'
+    use-geoip: "false"
+    use-geoip2: "true"
+
+maxmindLicenceKey: {{ env "MAXMIND_LICENCE_KEY" }}

@@ -8,6 +8,9 @@ repositories:
   - name: prometheus-community
     url: https://prometheus-community.github.io/helm-charts
 
+  - name: grafana
+    url: https://grafana.github.io/helm-charts
+
   - name: jetstack
     url: https://charts.jetstack.io
 
@@ -87,10 +90,22 @@ releases:
     disableValidation: true
     values:
       - values/kube-prometheus-stack.gotmpl
-      - prometheus:
-          prometheusSpec:
-            podMonitorSelectorNilUsesHelmValues: false
-            serviceMonitorSelectorNilUsesHelmValues: false
+
+  - name: loki
+    namespace: monitoring
+    chart: grafana/loki
+    disableValidation: false
+    values:
+      - values/loki.gotmpl
+
+  - name: promtail
+    namespace: monitoring
+    chart: grafana/promtail
+    values:
+      - config:
+          clients:
+            - url: http://loki:3100/loki/api/v1/push
+              tenant_id: 1
 
 helmDefaults:
   # wait for k8s resources via --wait

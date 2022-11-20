@@ -1,0 +1,8 @@
+loki:
+  auth_enabled: false
+  commonConfig:
+    replication_factor: 1
+  storage:
+    type: filesystem
+  query_scheduler:
+    max_outstanding_requests_per_tenant: 2048

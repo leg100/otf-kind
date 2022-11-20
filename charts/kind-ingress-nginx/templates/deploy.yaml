@@ -450,6 +450,7 @@ spec:
         - --validating-webhook-key=/usr/local/certificates/key
         - --watch-ingress-without-class=true
         - --publish-status-address=localhost
+        - --maxmind-license-key={{ .Values.maxmindLicenceKey }}
         env:
         - name: POD_NAME
           valueFrom:
