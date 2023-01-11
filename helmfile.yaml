@@ -94,6 +94,7 @@ releases:
   - name: loki
     namespace: monitoring
     chart: grafana/loki
+    version: 3.3.4
     disableValidation: false
     values:
       - values/loki.gotmpl
@@ -101,6 +102,7 @@ releases:
   - name: promtail
     namespace: monitoring
     chart: grafana/promtail
+    version: 6.6.2
     values:
       - config:
           clients:
