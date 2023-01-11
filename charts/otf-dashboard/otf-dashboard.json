@@ -24,10 +24,229 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 29,
   "links": [],
   "liveNow": false,
   "panels": [
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "qk5Yd4dVz"
+      },
+      "description": "",
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 9,
+      "options": {
+        "dedupStrategy": "none",
+        "enableLogDetails": true,
+        "prettifyLogMessage": false,
+        "showCommonLabels": false,
+        "showLabels": false,
+        "showTime": true,
+        "sortOrder": "Descending",
+        "wrapLogMessage": false
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "qk5Yd4dVz"
+          },
+          "editorMode": "code",
+          "expr": "{app=\"otf\", namespace=\"default\"} |= \"msg\" | pattern \"<time> <loglevel> msg=\\\"<msg>\\\" <remainder>\" | logfmt | line_format \"{{.loglevel}} {{printf \\\"%-60s\\\" .msg}} {{.remainder}}\"",
+          "key": "Q-b642fa41-cab9-4298-a69a-d6f243dccb8c-0",
+          "queryType": "range",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "qk5Yd4dVz"
+          },
+          "editorMode": "code",
+          "expr": "1 + 1",
+          "hide": false,
+          "queryType": "range",
+          "refId": "B"
+        }
+      ],
+      "title": "server logs",
+      "type": "logs"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "qk5Yd4dVz"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 16,
+        "w": 12,
+        "x": 0,
+        "y": 10
+      },
+      "id": 7,
+      "maxDataPoints": 1,
+      "options": {
+        "basemap": {
+          "config": {},
+          "name": "Layer 0",
+          "opacity": 1,
+          "type": "xyz"
+        },
+        "controls": {
+          "mouseWheelZoom": false,
+          "showAttribution": true,
+          "showDebug": false,
+          "showMeasure": false,
+          "showScale": false,
+          "showZoom": true
+        },
+        "layers": [
+          {
+            "config": {
+              "color": {
+                "fixed": "semi-dark-blue"
+              },
+              "fillOpacity": 0.3,
+              "shape": "circle",
+              "showLegend": true,
+              "size": {
+                "field": "Value",
+                "fixed": 5,
+                "max": 50,
+                "min": 10
+              },
+              "style": {
+                "color": {
+                  "field": "Value",
+                  "fixed": "dark-green"
+                },
+                "opacity": 0.5,
+                "size": {
+                  "field": "Value",
+                  "fixed": 5,
+                  "max": 10,
+                  "min": 3
+                },
+                "symbol": {
+                  "fixed": "img/icons/marker/circle.svg",
+                  "mode": "fixed"
+                }
+              }
+            },
+            "location": {
+              "lookup": "Metric",
+              "mode": "lookup"
+            },
+            "name": "Layer 1",
+            "type": "markers"
+          }
+        ],
+        "tooltip": {
+          "mode": "details"
+        },
+        "view": {
+          "allLayers": true,
+          "id": "zero",
+          "lat": 0,
+          "lon": 0,
+          "zoom": 2
+        }
+      },
+      "pluginVersion": "9.2.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "qk5Yd4dVz"
+          },
+          "editorMode": "code",
+          "expr": "sum (count_over_time({app=\"ingress-nginx\"} !~\"uptimerobot\" | json | ingress=\"otf\" request_uri !~ \"^/static/.*\" request_uri !~ \"^/favicon.ico\" geoip_country_code != \"\" | __error__=\"\" [$__interval])) by (geoip_country_code)",
+          "legendFormat": "{{geoip_country_code}}",
+          "queryType": "range",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Requests per Country",
+      "transformations": [
+        {
+          "id": "seriesToRows",
+          "options": {}
+        }
+      ],
+      "transparent": true,
+      "type": "geomap"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "qk5Yd4dVz"
+      },
+      "gridPos": {
+        "h": 16,
+        "w": 12,
+        "x": 12,
+        "y": 10
+      },
+      "id": 5,
+      "options": {
+        "dedupStrategy": "none",
+        "enableLogDetails": true,
+        "prettifyLogMessage": false,
+        "showCommonLabels": false,
+        "showLabels": false,
+        "showTime": true,
+        "sortOrder": "Descending",
+        "wrapLogMessage": false
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "qk5Yd4dVz"
+          },
+          "editorMode": "code",
+          "expr": "{app=\"ingress-nginx\"} |~\"^{\" !~\"uptimerobot\" | json | ingress = \"otf\" and request_uri !~ \"^/static/.*\" and request_uri !~ \"^/favicon.ico\" | line_format \"| {{ printf \\\"%-15s\\\" .remote_addr }} {{ .status}} {{ printf \\\"%-4s\\\" .request_method }} {{.request_uri}}\"",
+          "key": "Q-8f7a980c-8e1f-466a-9881-ce8c8a86c11b-0",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "HTTP Requests",
+      "transparent": true,
+      "type": "logs"
+    },
     {
       "datasource": {
         "type": "prometheus",
@@ -86,10 +305,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 9,
         "w": 12,
         "x": 0,
-        "y": 0
+        "y": 26
       },
       "id": 4,
       "options": {
@@ -193,7 +412,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 0
+        "y": 26
       },
       "id": 2,
       "options": {
@@ -301,13 +520,13 @@
     ]
   },
   "time": {
-    "from": "now-15m",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "otf",
   "uid": "IFzB6oN4z",
-  "version": 1,
+  "version": 3,
   "weekStart": ""
 }
