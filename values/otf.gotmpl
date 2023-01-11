@@ -9,6 +9,8 @@ github:
   clientID: {{ env "OTF_GITHUB_CLIENT_ID" }}
   clientSecret: {{ env "OTF_GITHUB_CLIENT_SECRET" }}
 
+hostname: {{ requiredEnv "OTF_HOSTNAME" }}
+
 database: postgres://postgres-rw/otf
 databaseUsernameFromSecret:
   name: postgres-app
