@@ -57,7 +57,7 @@
             "uid": "qk5Yd4dVz"
           },
           "editorMode": "code",
-          "expr": "{app=\"otf\", namespace=\"default\"} |= \"msg\" | pattern \"<time> <loglevel> msg=\\\"<msg>\\\" <remainder>\" | logfmt | line_format \"{{.loglevel}} {{printf \\\"%-60s\\\" .msg}} {{.remainder}}\"",
+          "expr": "{app=\"otf\", namespace=\"default\"} | pattern \"<time> <loglevel> <msg> | <remainder>\" | logfmt | line_format \"{{.loglevel}} {{printf \\\"%-60s\\\" .msg}} {{.remainder}}\"",
           "key": "Q-b642fa41-cab9-4298-a69a-d6f243dccb8c-0",
           "queryType": "range",
           "refId": "A"
@@ -148,12 +148,12 @@
               },
               "style": {
                 "color": {
-                  "field": "Value",
+                  "field": "Value #A",
                   "fixed": "dark-green"
                 },
                 "opacity": 0.5,
                 "size": {
-                  "field": "Value",
+                  "field": "Value #A",
                   "fixed": 5,
                   "max": 10,
                   "min": 3
@@ -164,8 +164,12 @@
                 }
               }
             },
+            "filterData": {
+              "id": "byRefId",
+              "options": "A"
+            },
             "location": {
-              "lookup": "Metric",
+              "lookup": "geoip_country_code",
               "mode": "lookup"
             },
             "name": "Layer 1",
@@ -191,9 +195,9 @@
             "uid": "qk5Yd4dVz"
           },
           "editorMode": "code",
-          "expr": "sum (count_over_time({app=\"ingress-nginx\"} !~\"uptimerobot\" | json | ingress=\"otf\" request_uri !~ \"^/static/.*\" request_uri !~ \"^/favicon.ico\" geoip_country_code != \"\" | __error__=\"\" [$__interval])) by (geoip_country_code)",
+          "expr": "sum(count_over_time({app=\"ingress-nginx\"} !~\"uptimerobot\" | json | ingress=\"otf\" request_uri !~ \"^/static/.*\" request_uri !~ \"^/favicon.ico\" geoip_country_code != \"\" | __error__=\"\" [$__interval])) by (geoip_country_code)",
           "legendFormat": "{{geoip_country_code}}",
-          "queryType": "range",
+          "queryType": "instant",
           "range": true,
           "refId": "A"
         }
@@ -527,6 +531,6 @@
   "timezone": "",
   "title": "otf",
   "uid": "IFzB6oN4z",
-  "version": 3,
+  "version": 4,
   "weekStart": ""
 }
