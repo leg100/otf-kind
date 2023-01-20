@@ -19,6 +19,8 @@ databasePasswordFromSecret:
   name: postgres-app
   key: password
 
+logLevel: debug
+
 ingress:
   enabled: true
   annotations:
@@ -34,6 +36,16 @@ ingress:
 serviceMonitor:
   enabled: true
 
+# run terraform apply within a sandbox for additional security
 sandbox: true
+
+# set custom CA certs to allow terraform to connect to the squid
+# proxy (below).
+CACerts: true
+
+# Set HTTPS_PROXY=squid:3128 - proxies all outgoing connections,
+# particularly providers, which are cached to save on bandwidth and
+# speed up performance.
+proxy: "squid:3128"
 
 siteAdminToken: {{ env "OTF_SITE_TOKEN" }}

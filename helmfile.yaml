@@ -109,6 +109,12 @@ releases:
             - url: http://loki:3100/loki/api/v1/push
               tenant_id: 1
 
+  - name: squid
+    namespace: default
+    chart: ./charts/squid
+    values:
+      - values/squid.gotmpl
+
 helmDefaults:
   # wait for k8s resources via --wait
   wait: true
