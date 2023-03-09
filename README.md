@@ -9,6 +9,7 @@ Deploys [otf](https://github.com/leg100/otf) onto a [kind](https://kind.sigs.k8s
 * [grafana](https://grafana.com/): dashboards for monitoring metrics
 * [loki](https://grafana.com/oss/loki/): log aggregation
 * [promtail](https://grafana.com/docs/loki/latest/clients/promtail/): log collector
+* [squid](https://github.com/leg100/squid): caches terraform providers
 
 ## Pre-requisites:
 
@@ -35,4 +36,22 @@ export OTF_GITHUB_CLIENT_ID=<see otf docs>
 export OTF_GITHUB_CLIENT_SECRET=<see otf docs>
 ```
 
-Run `make deploy`.
+And for squid, you need to generate a self-signed certificate, which it uses to 'ssl-bump' connections:
+
+```
+openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes -keyout key.pem -out ca.pem -subj "/CN=squid.local"
+```
+
+Place the cert and key into a directory named `./certs`:
+
+```
+mv ca.pem key.pem ./certs
+```
+
+And deploy it into the cluster via a configmap:
+
+```
+kubectl create configmap create --file-from=./certs
+```
+
+Now run `make deploy` to deploy all the charts. If you run into issues replace `helmfile apply` with `helmfile sync` in the `deploy` make task.
