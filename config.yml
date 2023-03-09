@@ -3,7 +3,7 @@ apiVersion: kind.x-k8s.io/v1alpha4
 # One control plane node and three "workers".
 nodes:
 - role: control-plane
-  image: kindest/node:v1.24.6@sha256:97e8d00bc37a7598a0b32d1fabd155a96355c49fa0d4d4790aab0f161bf31be1
+  image: kindest/node:v1.25.3@sha256:f52781bc0d7a19fb6c405c2af83abfeb311f130707a0e219175677e366cc45d1
   kubeadmConfigPatches:
   - |
     kind: InitConfiguration
@@ -12,11 +12,11 @@ nodes:
         authentication-token-webhook: "true"
         authorization-mode: Webhook
 - role: worker
-  image: kindest/node:v1.24.6@sha256:97e8d00bc37a7598a0b32d1fabd155a96355c49fa0d4d4790aab0f161bf31be1
+  image: kindest/node:v1.25.3@sha256:f52781bc0d7a19fb6c405c2af83abfeb311f130707a0e219175677e366cc45d1
 - role: worker
-  image: kindest/node:v1.24.6@sha256:97e8d00bc37a7598a0b32d1fabd155a96355c49fa0d4d4790aab0f161bf31be1
+  image: kindest/node:v1.25.3@sha256:f52781bc0d7a19fb6c405c2af83abfeb311f130707a0e219175677e366cc45d1
 - role: worker
-  image: kindest/node:v1.24.6@sha256:97e8d00bc37a7598a0b32d1fabd155a96355c49fa0d4d4790aab0f161bf31be1
+  image: kindest/node:v1.25.3@sha256:f52781bc0d7a19fb6c405c2af83abfeb311f130707a0e219175677e366cc45d1
   kubeadmConfigPatches:
   - |
     kind: JoinConfiguration

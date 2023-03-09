@@ -26,7 +26,7 @@ releases:
   - name: cloudnative-pg
     namespace: cnpg-system
     chart: cloudnative-pg/cloudnative-pg
-    version: 0.15.1
+    version: 0.17.0
 
   - name: otf-dashboard
     namespace: monitoring
