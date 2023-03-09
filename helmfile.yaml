@@ -59,6 +59,8 @@ releases:
     version: 4.3.0
     values:
       - values/ingress-nginx.gotmpl
+    needs:
+      - monitoring/prometheus
 
   - name: cert-manager
     namespace: cert-manager
