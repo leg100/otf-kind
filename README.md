@@ -36,6 +36,12 @@ export OTF_GITHUB_CLIENT_ID=<see otf docs>
 export OTF_GITHUB_CLIENT_SECRET=<see otf docs>
 ```
 
+Optionally set a max-mind license key to geo-locate clients in the ingress controller access logs:
+
+```bash
+export MAXMIND_LICENCE_KEY=<key>
+```
+
 And for squid, you need to generate a self-signed certificate, which it uses to 'ssl-bump' connections:
 
 ```
