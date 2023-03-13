@@ -30,7 +30,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "qk5Yd4dVz"
+        "uid": "1Pig6A-4k"
       },
       "description": "",
       "gridPos": {
@@ -54,24 +54,13 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "qk5Yd4dVz"
+            "uid": "1Pig6A-4k"
           },
           "editorMode": "code",
           "expr": "{app=\"otf\", namespace=\"default\"} | pattern \"<time> <loglevel> <msg> | <remainder>\" | logfmt | line_format \"{{.loglevel}} {{printf \\\"%-60s\\\" .msg}} {{.remainder}}\"",
-          "key": "Q-b642fa41-cab9-4298-a69a-d6f243dccb8c-0",
           "queryType": "range",
+          "range": true,
           "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "loki",
-            "uid": "qk5Yd4dVz"
-          },
-          "editorMode": "code",
-          "expr": "1 + 1",
-          "hide": false,
-          "queryType": "range",
-          "refId": "B"
         }
       ],
       "title": "server logs",
@@ -80,7 +69,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "qk5Yd4dVz"
+        "uid": "1Pig6A-4k"
       },
       "description": "",
       "fieldConfig": {
@@ -192,7 +181,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "qk5Yd4dVz"
+            "uid": "1Pig6A-4k"
           },
           "editorMode": "code",
           "expr": "sum(count_over_time({app=\"ingress-nginx\"} !~\"uptimerobot\" | json | ingress=\"otf\" request_uri !~ \"^/static/.*\" request_uri !~ \"^/favicon.ico\" geoip_country_code != \"\" | __error__=\"\" [$__interval])) by (geoip_country_code)",
@@ -215,7 +204,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "qk5Yd4dVz"
+        "uid": "1Pig6A-4k"
       },
       "gridPos": {
         "h": 16,
@@ -238,12 +227,12 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "qk5Yd4dVz"
+            "uid": "1Pig6A-4k"
           },
           "editorMode": "code",
           "expr": "{app=\"ingress-nginx\"} |~\"^{\" !~\"uptimerobot\" | json | ingress = \"otf\" and request_uri !~ \"^/static/.*\" and request_uri !~ \"^/favicon.ico\" | line_format \"| {{ printf \\\"%-15s\\\" .remote_addr }} {{ .status}} {{ printf \\\"%-4s\\\" .request_method }} {{.request_uri}}\"",
-          "key": "Q-8f7a980c-8e1f-466a-9881-ce8c8a86c11b-0",
           "queryType": "range",
+          "range": true,
           "refId": "A"
         }
       ],
@@ -524,13 +513,13 @@
     ]
   },
   "time": {
-    "from": "now-24h",
+    "from": "now-2d",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "otf",
   "uid": "IFzB6oN4z",
-  "version": 4,
+  "version": 1,
   "weekStart": ""
 }
