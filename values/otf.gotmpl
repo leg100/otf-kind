@@ -1,8 +1,5 @@
 replicaCount: 3
 
-image:
-  tag: {{ env "IMAGE_TAG" | default "latest" }}
-
 secret: {{ requiredEnv "OTF_SECRET" }}
 
 github:
