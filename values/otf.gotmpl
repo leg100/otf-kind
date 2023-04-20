@@ -16,7 +16,9 @@ databasePasswordFromSecret:
   name: postgres-app
   key: password
 
-logLevel: debug
+logging:
+  verbosity: 1
+  format: text
 
 ingress:
   enabled: true
