@@ -57,7 +57,7 @@
             "uid": "1Pig6A-4k"
           },
           "editorMode": "code",
-          "expr": "{app=\"otf\", namespace=\"default\"} | pattern \"<time> <loglevel> <msg> | <remainder>\" | logfmt | line_format \"{{.loglevel}} {{printf \\\"%-60s\\\" .msg}} {{.remainder}}\"",
+          "expr": "{app=\"otf\", namespace=\"default\"} | pattern \"<time> <_> msg=\\\"<msg>\\\" <remainder>\" | logfmt | line_format \"{{printf \\\"%-50s\\\" .msg}} subject={{.subject}} {{.remainder}}\"",
           "queryType": "range",
           "range": true,
           "refId": "A"
@@ -520,6 +520,6 @@
   "timezone": "",
   "title": "otf",
   "uid": "IFzB6oN4z",
-  "version": 1,
+  "version": 3,
   "weekStart": ""
 }
