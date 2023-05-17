@@ -40,11 +40,11 @@ sandbox: true
 
 # set custom CA certs to allow terraform to connect to the squid
 # proxy (below).
-CACerts: true
+caCerts: true
 
 # Set HTTPS_PROXY=squid:3128 - proxies all outgoing connections,
 # particularly providers, which are cached to save on bandwidth and
 # speed up performance.
 proxy: "squid:3128"
 
-siteAdminToken: {{ env "OTF_SITE_TOKEN" }}
+siteToken: {{ env "OTF_SITE_TOKEN" }}
