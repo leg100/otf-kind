@@ -51,13 +51,14 @@ openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes -keyout key.pem -ou
 Place the cert and key into a directory named `./certs`:
 
 ```
+mkdir ./certs
 mv ca.pem key.pem ./certs
 ```
 
 And deploy it into the cluster via a configmap:
 
 ```
-kubectl create configmap create --file-from=./certs
+kubectl create configmap certs --from-file=./certs
 ```
 
 Now run `make deploy` to deploy all the charts. If you run into issues replace `helmfile apply` with `helmfile sync` in the `deploy` make task.
