@@ -2,120 +2,21 @@ repositories:
   - name: otf
     url: https://leg100.github.io/otf-charts
 
-  - name: cloudnative-pg
-    url: https://cloudnative-pg.github.io/charts
-
-  - name: prometheus-community
-    url: https://prometheus-community.github.io/helm-charts
-
-  - name: grafana
-    url: https://grafana.github.io/helm-charts
-
-  - name: jetstack
-    url: https://charts.jetstack.io
+  - name: bitnami
+    url: https://charts.bitnami.com/bitnami
 
 releases:
   - name: otf
     namespace: default
-    chart: otf/otf
-    needs:
-      - postgres
+    chart: ../otf-charts/charts/otf
     values:
     - values/otf.gotmpl
-
-  - name: cloudnative-pg
-    namespace: cnpg-system
-    chart: cloudnative-pg/cloudnative-pg
-    version: 0.17.0
-
-  - name: otf-dashboard
-    namespace: monitoring
-    chart: ./charts/otf-dashboard
-
-  - name: cloudnative-pg-dashboard
-    namespace: monitoring
-    chart: cloudnative-pg/cnpg-sandbox
-    version: 0.6.1
-    disableValidationOnInstall: true
-    needs:
-      - monitoring/prometheus
-    set:
-    - name: kube-prometheus-stack.enabled
-      value: false
-    - name: cloudnative-pg.enabled
-      value: false
-
-  - name: postgres
-    namespace: default
-    chart: ./charts/postgres
-    disableValidationOnInstall: true
-    needs:
-      - cnpg-system/cloudnative-pg
-    labels:
-      release: postgres
 
   - name: ingress-nginx
     chart: ./charts/kind-ingress-nginx
     version: 4.3.0
     values:
       - values/ingress-nginx.gotmpl
-    needs:
-      - monitoring/prometheus
-
-  - name: cert-manager
-    namespace: cert-manager
-    chart: jetstack/cert-manager
-    version: 1.10.0
-    set:
-    - name: installCRDs
-      value: true
-    - name: ingressShim.defaultIssuerName
-      value: letsencrypt-prod
-    - name: ingressShim.defaultIssuerKind
-      value: ClusterIssuer
-    - name: ingressShim.defaultIssuerGroup
-      value: cert-manager.io
-
-  - name: cert-manager-issuer
-    chart: ./charts/cert-manager-issuer
-    disableValidationOnInstall: true
-    needs:
-      - cert-manager/cert-manager
-    set:
-    - name: email
-      value: {{ requiredEnv "EMAIL" }}
-
-  - name: prometheus
-    namespace: monitoring
-    chart: prometheus-community/kube-prometheus-stack
-    version: 41.6.1
-    disableValidation: true
-    values:
-      - values/kube-prometheus-stack.gotmpl
-
-  - name: loki
-    namespace: monitoring
-    chart: grafana/loki
-    version: 3.3.4
-    disableValidation: false
-    values:
-      - values/loki.gotmpl
-
-  - name: promtail
-    namespace: monitoring
-    chart: grafana/promtail
-    version: 6.6.2
-    values:
-      - config:
-          clients:
-            - url: http://loki:3100/loki/api/v1/push
-              tenant_id: 1
-
-  - name: squid
-    namespace: default
-    chart: ./charts/squid
-    values:
-      - values/squid.gotmpl
 
 helmDefaults:
   # wait for k8s resources via --wait

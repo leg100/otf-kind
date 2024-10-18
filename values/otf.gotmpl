@@ -1,4 +1,7 @@
-replicaCount: 3
+image:
+  tag: 0.1.13
+
+replicaCount: 1
 
 secret: {{ requiredEnv "OTF_SECRET" }}
 
@@ -8,13 +11,14 @@ github:
 
 hostname: {{ requiredEnv "OTF_HOSTNAME" }}
 
-database: postgres://postgres-rw/otf
-databaseUsernameFromSecret:
-  name: postgres-app
-  key: username
+postgres:
+  enabled: true
+  database: otf
+
+database: postgres://otf-postgresql?user=postgres
 databasePasswordFromSecret:
-  name: postgres-app
-  key: password
+  name: otf-postgresql
+  key: postgres-password
 
 logging:
   verbosity: 1
@@ -33,18 +37,9 @@ ingress:
         - {{ requiredEnv "OTF_HOSTNAME" }}
 
 serviceMonitor:
-  enabled: true
+  enabled: false
 
 # run terraform apply within a sandbox for additional security
 sandbox: true
-
-# set custom CA certs to allow terraform to connect to the squid
-# proxy (below).
-caCerts: true
-
-# Set HTTPS_PROXY=squid:3128 - proxies all outgoing connections,
-# particularly providers, which are cached to save on bandwidth and
-# speed up performance.
-proxy: "squid:3128"
 
 siteToken: {{ env "OTF_SITE_TOKEN" }}
